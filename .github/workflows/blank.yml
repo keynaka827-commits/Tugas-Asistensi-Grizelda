@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+// Struct untuk menyimpan data hitbox
+struct Hitbox {
+    float x; // posisi x
+    float y; // posisi y
+    float w; // lebar
+    float h; // tinggi
+};
+
+// Fungsi untuk mengecek apakah dua hitbox bertabrakan
+bool cekTabrakan(struct Hitbox *a, struct Hitbox *b) {
+    if (a->x < b->x + b->w &&     // sisi kanan A > sisi kiri B
+        a->x + a->w > b->x &&     // sisi kiri A < sisi kanan B
+        a->y < b->y + b->h &&     // sisi bawah A > sisi atas B
+        a->y + a->h > b->y) {     // sisi atas A < sisi bawah B
+        return true; // Ada tabrakan
+    }
+    return false; // Tidak ada tabrakan
+}
+
+int main() {
+    // Membuat dua hitbox
+    struct Hitbox kotak1 = {10, 10, 30, 30};
+    struct Hitbox kotak2 = {25, 25, 20, 20};
+
+    // Membuat pointer ke hitbox
+    struct Hitbox *p1 = &kotak1;
+    struct Hitbox *p2 = &kotak2;
+
+    // Menampilkan posisi kedua hitbox
+    printf("Hitbox 1: x=%.1f y=%.1f w=%.1f h=%.1f\n", p1->x, p1->y, p1->w, p1->h);
+    printf("Hitbox 2: x=%.1f y=%.1f w=%.1f h=%.1f\n", p2->x, p2->y, p2->w, p2->h);
+
+    // Mengecek apakah bertabrakan
+    if (cekTabrakan(p1, p2)) {
+        printf("Kedua hitbox BERTABRAKAN!\n");
+    } else {
+        printf("Kedua hitbox TIDAK bertabrakan.\n");
+    }
+
+    return 0;
+}
